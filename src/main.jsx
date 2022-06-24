@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App'
+import { BrowserRouter } from 'react-router-dom'
+import App from './pages/App'
 import './styles/index.css'
 
 const root = document.getElementById('root')
@@ -8,6 +9,8 @@ const container = createRoot(root)
 
 container.render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </StrictMode>
 )
