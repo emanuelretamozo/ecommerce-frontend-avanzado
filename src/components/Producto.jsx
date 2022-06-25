@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import useFetcher from '..hooks/useFetcher'
+import useFetcher from '../hooks/useFetcher'
 
 const Producto = () => {
   const { _id = '' } = useParams()
