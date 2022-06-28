@@ -18,7 +18,8 @@ const Producto = () => {
       <p>{producto[0].price}</p>
       <p>{producto[0].category}</p>
       <p>{producto[0].brand}</p>
-      <img loading='lazy' width={400} height={300} src={producto[0].image} />
+      {<img loading='lazy' width={400} height={300} src={producto[0].image} /> ||
+        <img loading='lazy' width={400} height={300} src={producto[0].images} />}
     </article>
   )
 }

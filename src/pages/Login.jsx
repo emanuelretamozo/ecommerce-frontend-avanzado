@@ -1,59 +1,98 @@
-import { useState } from 'react'
-import { useAuthContext } from '../context/AuthContext'
+import { useState, useEffect } from 'react'
+// import { useAuthContext } from '../context/AuthContext'
+import { FaSignInAlt } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { login, reset } from '../auth/authSlice'
+import Spinner from '../components/Spinner'
 
 const Login = () => {
-  const { loginAuth } = useAuthContext()
-  const [error, setError] = useState(null)
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
 
-  const defaultValues = {
-    username: 'user_Dev.f',
-    password: 'password_Dev.f'
+  const { email, password } = formData
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+
+    if (isSuccess || user) {
+      navigate('/')
+    }
+
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch])
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: [e.target.value]
+    }))
   }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    try {
-      await loginAuth(defaultValues)
-    } catch (wrong) {
-      setError(wrong.response.data.message)
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    const userData = {
+      email,
+      password
     }
+
+    dispatch(login(userData))
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        margin: '5rem auto',
-        width: '400px',
-        display: 'grid',
-        gap: '2rem',
-        padding: '2rem'
-      }}
-      className='border border-primary rounded'
-    >
-      <div className='text-center'>
-        <h3 className='m-0'>Login</h3>
-        {error && <p className='m-0 text-danger'>{error}</p>}
-      </div>
-      <div>
-        <input
-          name='username'
-          placeholder='Username'
-          type='text'
-          className='form-control'
-          autoComplete='off'
-        />
-      </div>
-      <div>
-        <input
-          name='password'
-          placeholder='Password'
-          type='password'
-          className='form-control'
-        />
-      </div>
-      <button type='submit' className='w-100 btn btn-primary'>Login</button>
-    </form>
+    <>
+      <section className='heading'>
+        <h1>
+          <FaSignInAlt /> Entrar a la página principal
+        </h1>
+        <p>Por favor teclea tus credenciales</p>
+      </section>
+      <section className='form'>
+        <form onSubmit={onSubmit}>
+          <div className='form-group'>
+            <input
+              type='email'
+              id='email'
+              name='email'
+              className='form-control'
+              value={email}
+              placeholder='Teclea tu email'
+              onChange={onChange}
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='password'
+              id='password'
+              name='password'
+              className='form-control'
+              value={password}
+              placeholder='Teclea tu contraseña'
+              onChange={onChange}
+            />
+          </div>
+          <div className='form-group'>
+            <button type='submit' className='btn btn-block'>Login</button>
+          </div>
+        </form>
+
+      </section>
+    </>
   )
 }
 
