@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import useAppContext from '../hooks/useAppContext'
 import useFetcher from '../hooks/useFetcher'
+import Card from '../components/Card'
 
 const Productos = () => {
   const { setProductos } = useAppContext()
@@ -19,15 +20,16 @@ const Productos = () => {
 
   return (
     <section className='row gy-4'>
-      {productos.map((index, key) => (
-        <div key={key} className='col-12 col-sm-6 col-md-6 col-lg-3'>
-          <Link to={`producto/${index.product_name}`}>
-            <article className='card'>
-              <img loading='lazy' className='card-img-top' src={index.image} alt={index.product_name} />
-              <div className='card-body'>
-                <p className='card-title'>{index.product_name}</p>
-              </div>
-            </article>
+      {productos?.map((product, index) => (
+        <div key={index} className='col-12 col-sm-6 col-md-6 col-lg-3'>
+          <Link to={`producto/${product?.product_name}/${product?._id}`}>
+            <Card
+              name={product?.product_name}
+              description={product?.description}
+              price={product?.price}
+              brand={product?.brand}
+              url={product?.image || product?.images}
+            />
           </Link>
         </div>
       ))}

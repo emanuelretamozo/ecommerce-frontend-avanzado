@@ -68,7 +68,7 @@ const NavBar = () => {
               ref={searchRef}
               className='form-control me-2'
               type='search'
-              placeholder='search product'
+              placeholder='buscar'
               aria-label='search'
             />
             <button className='btn btn-outline-success'>🔎</button>

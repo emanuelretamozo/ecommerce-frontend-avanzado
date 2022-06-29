@@ -57,9 +57,9 @@ const Login = () => {
   return (
     <>
       <section className='heading'>
-        <h1>
-          <FaSignInAlt /> Entrar a la página principal
-        </h1>
+        <div>
+          <FaSignInAlt /> Iniciar sesión para empezar a comprar
+        </div>
         <p>Por favor teclea tus credenciales</p>
       </section>
       <section className='form'>

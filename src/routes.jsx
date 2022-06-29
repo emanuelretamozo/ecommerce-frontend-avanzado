@@ -26,14 +26,13 @@ const Paths = () => {
           index: true
         },
         {
-          path: 'producto/:name',
+          path: 'producto/:name/:_id',
           element: <Producto />
         },
         {
           path: 'search',
           element: <Search />
         }
-
       ]
     },
     {
