@@ -25,6 +25,7 @@ const NavBar = () => {
       navigate('/productos/search', { replace: true })
       event.target.reset()
     }
+    console.log('Busqueda')
   }
 
   const { user } = useSelector((state) => state.auth)

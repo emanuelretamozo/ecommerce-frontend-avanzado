@@ -16,7 +16,7 @@ const Productos = () => {
 
   useEffect(() => {
     setProductos(productos)
-  }, [])
+  }, [productos])
 
   return (
     <section className='row gy-4'>
